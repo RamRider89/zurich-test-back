@@ -1,3 +1,6 @@
+#user
+*.bak
+
 TODO.md
 HELP.md
 target/
