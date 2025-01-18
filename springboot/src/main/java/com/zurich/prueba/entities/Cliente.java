@@ -1,3 +1,8 @@
+/**
+ * Entidad: Cliente
+ * Database: zurich_test_duarte
+ * Table: clientes
+ */
 package com.zurich.prueba.entities;
 
 import io.swagger.v3.oas.annotations.media.Schema;

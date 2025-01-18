@@ -1,3 +1,8 @@
+/**
+ * Repositorio: Cliente
+ * Database: zurich_test_duarte
+ * Table: clientes
+ */
 package com.zurich.prueba.repositories;
 
 import com.zurich.prueba.entities.Cliente;

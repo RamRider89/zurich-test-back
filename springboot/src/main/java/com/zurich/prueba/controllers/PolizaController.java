@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -74,11 +75,17 @@ public class PolizaController {
     @PostMapping
     public ResponseEntity<Poliza> createPoliza(@RequestBody Poliza poliza) {
 
-        // Ignorar el ID enviado en la solicitud
-        poliza.setId(null);
+        try {
+            // Ignorar el ID enviado en la solicitud
+            poliza.setId(null);
 
-        Poliza nuevaPoliza = polizaService.createPoliza(poliza);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPoliza);
+            Poliza nuevaPoliza = polizaService.createPoliza(poliza);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPoliza);
+
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     /**
@@ -100,8 +107,15 @@ public class PolizaController {
             @PathVariable Long id, 
             @RequestBody Poliza poliza
         ) {
-        Poliza polizaActualizada = polizaService.updatePoliza(id, poliza);
-        return polizaActualizada != null ? ResponseEntity.ok(polizaActualizada) : ResponseEntity.notFound().build();
+
+            try {
+                Poliza polizaActualizada = polizaService.updatePoliza(id, poliza);
+                return polizaActualizada != null ? ResponseEntity.ok(polizaActualizada) : ResponseEntity.notFound().build();
+
+            } catch (ResponseStatusException ex) {
+
+                return ResponseEntity.badRequest().build();
+            }
     }
 
     /**
@@ -116,9 +130,14 @@ public class PolizaController {
             @ApiResponse(responseCode = "500", description = "Error en el servidor", content = @Content)
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePoliza(@PathVariable Long id) {
-        polizaService.deletePoliza(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deletePoliza(@PathVariable Long id) {
+        try {
+            polizaService.deletePoliza(id);
+            return ResponseEntity.noContent().build();
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+
+        }
     }
 
 }

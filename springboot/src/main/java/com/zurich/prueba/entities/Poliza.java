@@ -1,3 +1,8 @@
+/**
+ * Entidad: Poliza
+ * Database: zurich_test_duarte
+ * Table: polizas
+ */
 package com.zurich.prueba.entities;
 
 import java.time.LocalDate;
@@ -20,10 +25,12 @@ public class Poliza {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY) // Marcar el campo id como solo lectura en Swagger UI
     private Long id;
 
+    /** relacion con la tabla clientes by id */
     @ManyToOne
     @JoinColumn(name = "cliente", nullable = false)
     private Cliente cliente;
 
+    /** relacion con la tabla poliza_types by id */
     @Column(name = "type_poliza", nullable = false)
     private Integer typePoliza;
 
@@ -36,6 +43,9 @@ public class Poliza {
     @Column(nullable = false)
     private Long monto;
 
+    /** @true: activa
+     * @false: inactiva 
+     * */
     @Column(nullable = false)
     private Boolean status;
 

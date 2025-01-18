@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ClienteController {
 
     /**
      * GET all Clientes
-     * Obtener todos
+     * Obtener todos los clientes
      * @return array
      */
     @Operation(summary = "Obtener todos los clientes", description = "Retorna una lista con todos los clientes")
@@ -113,9 +114,13 @@ public class ClienteController {
             @ApiResponse(responseCode = "500", description = "Error en el servidor", content = @Content)
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
-        clienteService.deleteCliente(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteCliente(@PathVariable Long id) {
+        try {
+            clienteService.deleteCliente(id);
+            return ResponseEntity.noContent().build();
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        }
     }
 
 }
