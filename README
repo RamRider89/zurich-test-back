@@ -1,0 +1,97 @@
+# zurich-test-back
+Este proyecto es el backend de la aplicación de gestión de seguros, desarrollado con Spring Boot.
+
+## Table of contents
+
+- [Overview](#overview)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+- [Author](#author)
+
+## Overview
+Requisitos
+- Java JDK (versión 17 o superior)
+- Maven
+- PostgreSQL (o Oracle)
+
+
+1. Instalación
+Clonar el repositorio: https://github.com/RamRider89/zurich-test-back
+
+2. Compilar el proyecto:
+cd gestion-seguros-backend
+mvn clean install
+
+Configuración
+1. Configurar la base de datos:
+Crea una base de datos en PostgreSQL (o Oracle).
+Modifica el archivo src/main/resources/application.properties con la información de conexión a tu base de datos:
+'''
+spring.datasource.url=jdbc:postgresql://localhost:5432/nombre_de_la_base_de_datos
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+'''
+
+Ejecutar la aplicación
+1. Ejecuta la aplicación con Maven:
+mvn spring-boot:run
+
+API REST
+La aplicación expone una API REST para la gestión de clientes y pólizas. Puedes acceder a la documentación de la API en la siguiente URL:
+
+http://localhost:8080/swagger-ui/index.html
+
+
+Estructura del proyecto
+src/
+├── main/
+│   ├── java/
+│   │   └── com/
+│   │       └── zurich/
+│   │           └── prueba/
+│   │               ├── config/
+│   │               │   └── CorsFilter.java
+│   │               ├── controllers/
+│   │               │   ├── ClienteController.java
+│   │               │   └── PolizaController.java
+│   │               ├── entities/
+│   │               │   ├── Cliente.java
+│   │               │   └── Poliza.java
+│   │               ├── repositories/
+│   │               │   ├── ClienteRepository.java
+│   │               │   └── PolizaRepository.java
+│   │               └── services/
+│   │                   ├── ClienteService.java
+│   │                   └── PolizaService.java
+│   └── resources/
+│       └── application.properties
+└── test/
+    └── java/
+        └── com/
+            └── zurich/
+                └── prueba/
+                    └── PruebaApplicationTests.java
+
+
+### Links
+
+- Repositorio URL: ([github.com/RamRider89/zurich-test-back/](https://github.com/RamRider89/zurich-test-back))
+
+## My process
+
+### Built with
+
+- Postgresql
+- java: openjdk version "21.0.5" 2024-10-15
+- gradle: 8.12
+- maven: 3.8.7
+- springboot: 3.4.1
+- en Ubuntu 24.04
+
+## Author
+
+- Website - [Carlos David Duarte](https://www.davdav.tech)
+- Mail - [david.duarte@davdav.tech](mailto:david.duarte@davdav.tech)
+- Twitter - [@davidgillnn](https://www.twitter.com/davidgillnn)
+- GitHub - [@RamRider89](https://github.com/RamRider89/)

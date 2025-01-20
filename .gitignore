@@ -1,3 +1,9 @@
+# user
+.vscode
+.vscode/*
+.bak
+.bak/*
+
 # Compiled class file
 *.class
 
