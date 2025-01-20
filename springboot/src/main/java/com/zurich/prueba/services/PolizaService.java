@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -91,6 +92,20 @@ public class PolizaService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Póliza no encontrada");
         }
         polizaRepository.deleteById(id);
+    }
+
+    /**
+     * Filtrar polizas
+     */
+    public List<Poliza> filterPolizas(Integer tipo, Boolean estado, LocalDate fechaInicio, LocalDate fechaFin) {
+        return polizaRepository.filtrarPolizas(tipo, estado, fechaInicio, fechaFin);
+    }
+
+    /**
+     * Obtener polizas por id de cliente
+     */
+    public List<Poliza> getPolizasByClienteId(Long clienteId) {
+        return polizaRepository.findByClienteId(clienteId);
     }
 
 }

@@ -14,7 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/polizas")
@@ -140,4 +143,64 @@ public class PolizaController {
         }
     }
 
+
+    /**
+     * GET Polizas
+     * Filtro by tipo estado fechaInicio fechaFin
+     * @return array
+     */
+    @Operation(summary = "Filtrar pólizas", description = "Retorna una lista de pólizas que cumplen con los filtros especificados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de pólizas filtrada correctamente",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Poliza.class))}),
+            @ApiResponse(responseCode = "400", description = "Error en los parámetros de filtro", content = @Content)
+    })
+    @GetMapping("/filtrar")
+    public List<Poliza> filterPolizas(
+            @RequestParam(value = "tipo", required = false) Integer tipo,
+            @RequestParam(value = "estado", required = false) Boolean estado,
+            @RequestParam(value = "fechaInicio", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+            @RequestParam(value = "fechaFin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin
+    ) {
+        return polizaService.filterPolizas(tipo, estado, fechaInicio, fechaFin);
+    }
+
+    /**
+     * GET Polizas
+     * Filtro by idCliente
+     * @return array
+     */
+     @Operation(summary = "Obtener pólizas por ID de cliente", 
+              description = "Retorna una lista de pólizas asociadas al ID de cliente especificado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de pólizas obtenida correctamente",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Poliza.class))}),
+            @ApiResponse(responseCode = "404", description = "No se encontraron pólizas para el cliente", content = @Content)
+    })
+    @GetMapping("/cliente/{clienteId}")
+    public List<Poliza> getPolizasByClienteId(@PathVariable Long clienteId) {
+        return polizaService.getPolizasByClienteId(clienteId);
+    }
+
+    /**
+     * Solicitud de cancelacion ficticia
+     */
+    @PostMapping("/{polizaId}/cancelar")
+    public ResponseEntity<String> solicitarCancelacion(@PathVariable Long polizaId) {
+        try {
+            // Generar un folio ficticio y devolverlo como JSON
+            String folio = generarFolioFicticio();
+            return ResponseEntity.ok("{\"folio\": \"" + folio + "\"}"); 
+
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        }
+    }
+
+    // generar un folio ficticio de ejemplo
+    private String generarFolioFicticio() {
+        return UUID.randomUUID().toString();
+    }
 }
