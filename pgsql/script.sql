@@ -78,7 +78,7 @@ INSERT INTO clientes (name, email, phone, address) VALUES
 -- Insertando dos pólizas de ejemplo
 INSERT INTO polizas (cliente, type_poliza, date_start, date_expiration, monto, status) VALUES
 (1, 1, '2024-01-01', '2025-01-01', 10000.00, true),
-(2, 2, '2024-06-15', '2025-06-15', 2000.50, true);
+(2, 2, '2024-06-15', '2025-06-15', 2000.50, true),
 (2, 3, '2024-01-01', '2025-01-01', 10000.00, true),
 (1, 4, '2024-06-15', '2025-06-15', 2000.50, false);
 
