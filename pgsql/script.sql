@@ -39,7 +39,7 @@ CREATE TABLE polizas (
     type_poliza SMALLINT NOT NULL,
     date_start DATE NOT NULL,
     date_expiration DATE NOT NULL,
-    monto BIGINT NOT NULL,
+    monto NUMERIC(10, 2) NOT NULL, -- Cambiar a NUMERIC(10, 2) para admitir decimales
     status BOOLEAN NOT NULL,
     CONSTRAINT fk_polizas_cliente FOREIGN KEY (cliente) REFERENCES clientes (id)
 );
@@ -72,10 +72,43 @@ INSERT INTO poliza_types (id, name) VALUES
 -- Datos de ejemplo
 -- Insertando dos clientes de ejemplo
 INSERT INTO clientes (name, email, phone, address) VALUES 
-('Carlos Duarte', 'carlos.duarte@zurich.com', '1234567890', 'Allende 123'),
-('Sofia Mendoza', 'sofia.mendoza@zurich.com', '9876543210', 'Calle Cuarta No. 456');
+('Carlos Duarte Gill', 'carlos.duarte@zurich.com', '1234567890', 'Allende 123 Centro'),
+('Sofia Mendoza Rodriguez', 'sofia.mendoza@zurich.com', '9876543210', 'Calle Cuarta No. 456');
 
 -- Insertando dos pólizas de ejemplo
 INSERT INTO polizas (cliente, type_poliza, date_start, date_expiration, monto, status) VALUES
-(1, 1, '2024-01-01', '2025-01-01', 10000, true),
-(2, 2, '2024-06-15', '2025-06-15', 2000, true);
+(1, 1, '2024-01-01', '2025-01-01', 10000.00, true),
+(2, 2, '2024-06-15', '2025-06-15', 2000.50, true);
+(2, 3, '2024-01-01', '2025-01-01', 10000.00, true),
+(1, 4, '2024-06-15', '2025-06-15', 2000.50, false);
+
+
+/**
+Funcion de filtrado
+*/
+CREATE OR REPLACE FUNCTION filtrar_polizas(
+    tipo INTEGER,
+    estado BOOLEAN,
+    fecha_inicio DATE,
+    fecha_fin DATE
+)
+RETURNS TABLE (
+    id BIGINT,
+    cliente BIGINT,
+    type_poliza SMALLINT,
+    date_start DATE,
+    date_expiration DATE,
+    monto NUMERIC(10, 2),
+    status BOOLEAN
+)
+AS $$
+BEGIN
+    RETURN QUERY 
+    SELECT p.id, p.cliente, p.type_poliza, p.date_start, p.date_expiration, p.monto::NUMERIC(10,2), p.status
+    FROM polizas p
+    WHERE (tipo IS NULL OR p.type_poliza = tipo)
+      AND (estado IS NULL OR p.status = estado)
+      AND (fecha_inicio IS NULL OR p.date_start >= fecha_inicio)
+      AND (fecha_fin IS NULL OR p.date_expiration <= fecha_fin);
+END;
+$$ LANGUAGE plpgsql;
