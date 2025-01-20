@@ -89,6 +89,17 @@ src/
 - springboot: 3.4.1
 - en Ubuntu 24.04
 
+### AWS
+- Database: RDS service con Postgresql
+- Server: zurich.c1owy6y0ewe2.us-east-2.rds.amazonaws.com
+- Springboog: Elastic Beanstalk - Entorno Java Con el paquete compilado: prueba-0.0.1-SNAPSHOT.jar
+- API Publica: 
+- URL: ([http://ec2-18-191-210-67.us-east-2.compute.amazonaws.com:8080/swagger-ui/index.html](http://ec2-18-191-210-67.us-east-2.compute.amazonaws.com:8080/swagger-ui/index.html))
+
+- script de ejecucion en aws 
+nohup java -jar prueba-0.0.1-SNAPSHOT.jar 2>&1 >> logfile.log &
+
+
 ## Author
 
 - Website - [Carlos David Duarte](https://www.davdav.tech)
