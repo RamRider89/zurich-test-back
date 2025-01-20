@@ -1,5 +1,5 @@
 # zurich-test-back
-Servicios backend para la prueba de zurich
+Este proyecto es el backend de la aplicación de gestión de seguros, desarrollado con Spring Boot.
 
 ## Table of contents
 
@@ -7,16 +7,72 @@ Servicios backend para la prueba de zurich
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
 - [Author](#author)
 
 ## Overview
-Servicios backend para la prueba de zurich.
+Requisitos
+- Java JDK (versión 17 o superior)
+- Maven
+- PostgreSQL (o Oracle)
 
-### Screenshot
 
-![](./img/screenshot.png)
+1. Instalación
+Clonar el repositorio: https://github.com/RamRider89/zurich-test-back
+
+2. Compilar el proyecto:
+cd gestion-seguros-backend
+mvn clean install
+
+Configuración
+1. Configurar la base de datos:
+Crea una base de datos en PostgreSQL (o Oracle).
+Modifica el archivo src/main/resources/application.properties con la información de conexión a tu base de datos:
+'''
+spring.datasource.url=jdbc:postgresql://localhost:5432/nombre_de_la_base_de_datos
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+'''
+
+Ejecutar la aplicación
+1. Ejecuta la aplicación con Maven:
+mvn spring-boot:run
+
+API REST
+La aplicación expone una API REST para la gestión de clientes y pólizas. Puedes acceder a la documentación de la API en la siguiente URL:
+
+http://localhost:8080/swagger-ui/index.html
+
+
+Estructura del proyecto
+src/
+├── main/
+│   ├── java/
+│   │   └── com/
+│   │       └── zurich/
+│   │           └── prueba/
+│   │               ├── config/
+│   │               │   └── CorsFilter.java
+│   │               ├── controllers/
+│   │               │   ├── ClienteController.java
+│   │               │   └── PolizaController.java
+│   │               ├── entities/
+│   │               │   ├── Cliente.java
+│   │               │   └── Poliza.java
+│   │               ├── repositories/
+│   │               │   ├── ClienteRepository.java
+│   │               │   └── PolizaRepository.java
+│   │               └── services/
+│   │                   ├── ClienteService.java
+│   │                   └── PolizaService.java
+│   └── resources/
+│       └── application.properties
+└── test/
+    └── java/
+        └── com/
+            └── zurich/
+                └── prueba/
+                    └── PruebaApplicationTests.java
+
 
 ### Links
 
